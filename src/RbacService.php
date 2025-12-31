@@ -132,7 +132,14 @@ final class RbacService
             return false;
         }
 
-        $roleId = $this->resolveRoleId($roleIdOrSlug, false);
+        try {
+            $roleId = $this->resolveRoleId($roleIdOrSlug, false);
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'role_not_found') {
+                return false;
+            }
+            throw $e;
+        }
         $tenantId = $tenantId !== null && $tenantId > 0 ? $tenantId : null;
         $scope = self::normalizeScope($scope);
 

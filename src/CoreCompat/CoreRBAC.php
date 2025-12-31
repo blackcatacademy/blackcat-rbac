@@ -44,6 +44,9 @@ final class CoreRBAC
         return self::svc()->userHasRole($userId, $roleName);
     }
 
+    /**
+     * @return array<int,array<string,mixed>>
+     */
     public static function getRolesForUser(\PDO $db, int $userId): array
     {
         Database::initFromPdo($db);
